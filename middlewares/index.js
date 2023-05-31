@@ -1,3 +1,5 @@
 const globalErrorHandler = require("./globalErrorHandler");
 const isValidId = require("./isValidId");
-module.exports = { globalErrorHandler, isValidId };
+const validateBody = require("./validateBody");
+const authenticate = require("./authenticate");
+module.exports = { globalErrorHandler, isValidId, validateBody, authenticate };
