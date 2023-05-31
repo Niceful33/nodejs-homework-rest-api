@@ -9,14 +9,13 @@ const {
 } = require("../../controllers/contactsControllers");
 
 const router = express.Router();
-const { validateBody } = require("../../helpers");
-const { isValidId } = require("../../middlewares");
+const { isValidId, validateBody, authenticate } = require("../../middlewares");
 const {
   addSchema,
   updateSchema,
   updateFavoriteSchema,
 } = require("../../schemas/contactsSchema");
-
+router.use(authenticate);
 router.get("/", listContacts);
 
 router.get("/:contactId", isValidId, getContactById);
