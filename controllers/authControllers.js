@@ -1,6 +1,8 @@
 const { controllerWrapper } = require("../helpers");
 const {
   registerService,
+  verifyEmailService,
+  resendVerifyEmailService,
   loginService,
   logoutService,
   updateSubscriptionService,
@@ -16,6 +18,16 @@ const register = controllerWrapper(async (req, res) => {
     },
   });
 });
+const verifyEmail = controllerWrapper(async (req, res) => {
+  await verifyEmailService(req.params);
+  res.status(200).json({ message: "Verification successful" });
+});
+
+const resendVerifyEmail = controllerWrapper(async (req, res) => {
+  await resendVerifyEmailService(req.body);
+  res.status(200).json({ message: "Verification email sent" });
+});
+
 const login = controllerWrapper(async (req, res) => {
   const result = await loginService(req.body);
   res.status(200).json({
@@ -37,8 +49,9 @@ const getCurrent = controllerWrapper(async (req, res) => {
 });
 const logout = controllerWrapper(async (req, res) => {
   await logoutService(req.user);
-  res.status(204).end();
+  res.status(200).json({ message: "logout successful" });
 });
+
 const updateSubscription = controllerWrapper(async (req, res) => {
   const { userId } = req.params;
   await updateSubscriptionService(userId, req.body);
@@ -52,6 +65,8 @@ const uploadAvatar = controllerWrapper(async (req, res) => {
 
 module.exports = {
   register,
+  verifyEmail,
+  resendVerifyEmail,
   login,
   getCurrent,
   logout,
